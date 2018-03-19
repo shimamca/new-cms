@@ -1,41 +1,41 @@
 <?php
-class News extends SiteData {
+class Kavita extends SiteData {
 	public $file_type = array("image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/bmp", "application/pdf"); 
 	
 	function getTotalPages() {
-		$sql = "SELECT count(*) as total_pages from ".NEWS_EVENTS;
+		$sql = "SELECT count(*) as total_pages from ".KAVITA;
 		$res = $this->getData($sql);
 		return $res['oDATA'][0]['total_pages'];
 	}
 	function getAllNews($page=0, $orderby="id", $order="desc") {
-		$sql = "SELECT * from ".NEWS_EVENTS." order by $orderby $order limit $page,".PAGE_LIMIT;	
+		$sql = "SELECT * from ".KAVITA." order by $orderby $order limit $page,".PAGE_LIMIT;	
 		$res = $this->getData($sql);
 		return $res;
 	}
 	function getTotalAllActNews() {
-		$sql = "SELECT count(*) as total_pages from ".NEWS_EVENTS." where status = '1'";;
+		$sql = "SELECT count(*) as total_pages from ".KAVITA." where status = '1'";;
 		$res = $this->getData($sql);
 		return $res['oDATA'][0]['total_pages'];
 	}
 	function getAllActNews($start, $limit) {
-			$sql = "SELECT *, str_to_date(publish_date,'%d-%m-%Y') as p_date from ".NEWS_EVENTS." where status = '1'  ORDER BY p_date desc,sort_order ASC LIMIT $start, $limit";
+			$sql = "SELECT *, str_to_date(publish_date,'%d-%m-%Y') as p_date from ".KAVITA." where status = '1'  ORDER BY p_date desc,sort_order ASC LIMIT $start, $limit";
 		$res = $this->getData($sql);
 		return $res;
 	}
 	function getNewsLimit() {
-		$sql = "SELECT *, str_to_date(publish_date,'%d-%m-%Y') as p_date from ".NEWS_EVENTS." where status = '1' order by p_date desc LIMIT 0,4";
-		//$sql = "SELECT * from ".NEWS_EVENTS." where status = '1' order by publish_date desc LIMIT 0,4";	
+		$sql = "SELECT *, str_to_date(publish_date,'%d-%m-%Y') as p_date from ".KAVITA." where status = '1' order by p_date desc LIMIT 0,4";
+		//$sql = "SELECT * from ".KAVITA." where status = '1' order by publish_date desc LIMIT 0,4";	
 		$res = $this->getData($sql);
 		return $res;
 	}
 	function getNewsById($id) {
-		$sql = "SELECT * from ".NEWS_EVENTS." where md5(id) = '$id'";
+		$sql = "SELECT * from ".KAVITA." where md5(id) = '$id'";
 		$res = $this->getData($sql);
 		return $res;
 	}
 	function getNewsByUrl($url) {
 		$url = inText($url);
-		$sql = "SELECT * from ".NEWS_EVENTS." where url = '$url' and  url != ''";
+		$sql = "SELECT * from ".KAVITA." where url = '$url' and  url != ''";
 		$res = $this->getData($sql);
 		return $res;
 	}
@@ -51,7 +51,7 @@ class News extends SiteData {
 		
 		else {
 			/******************Sort Order******************/
-			$sql = "SELECT MAX(sort_order) as sort_order from ".NEWS_EVENTS;
+			$sql = "SELECT MAX(sort_order) as sort_order from ".KAVITA;
 			$res = $this->getData($sql);
 			$sort_order = ($res['oDATA'][0]['sort_order'])+1;
 			/*******************************************/			
@@ -62,7 +62,7 @@ class News extends SiteData {
 			else {
 				$file_name = "";
 			}		
-			$sql = "INSERT INTO ".NEWS_EVENTS." ( title,  publish_date, description,  file_name, sort_order,category) values ('$title',  '$publish_date', '$description',  '$file_name', '$sort_order','$category')";
+			$sql = "INSERT INTO ".KAVITA." ( title,  publish_date, description,  file_name, sort_order,category) values ('$title',  '$publish_date', '$description',  '$file_name', '$sort_order','$category')";
 			$res = $this->inserttoDB($sql);
 			$msg = 'Article and Events Added.';
 			setMessage($msg, "correct");			
@@ -89,14 +89,14 @@ class News extends SiteData {
 		
 		
 			if($file_name) {
-				$s = "SELECT * from ".NEWS_EVENTS." WHERE id = $id";
+				$s = "SELECT * from ".KAVITA." WHERE id = $id";
 				$res = $this->getData($s);
 				$filename = $res['oDATA'][0]['file_name'];
 				@unlink("../documents/".$filename);
 				
-				$sql = "UPDATE ".NEWS_EVENTS." SET  title='$title', publish_date='$publish_date',  file_name='$file_name', description='$description', category='$category',update_date='$update_date' where id='$id'";
+				$sql = "UPDATE ".KAVITA." SET  title='$title', publish_date='$publish_date',  file_name='$file_name', description='$description', category='$category',update_date='$update_date' where id='$id'";
 			} else {
-				$sql = "UPDATE ".NEWS_EVENTS." SET  title='$title', publish_date='$publish_date', description='$description', category='$category',update_date='$update_date' where id='$id'";
+				$sql = "UPDATE ".KAVITA." SET  title='$title', publish_date='$publish_date', description='$description', category='$category',update_date='$update_date' where id='$id'";
 			}
 			$res = $this->update($sql);
 		
@@ -106,7 +106,7 @@ class News extends SiteData {
 	
 	function disableStatus($id) {
 		$id = inText($id);		
-		$sql = "UPDATE ".NEWS_EVENTS." set status='0' where id='$id'";
+		$sql = "UPDATE ".KAVITA." set status='0' where id='$id'";
 		$res = $this->update($sql);
 		if($res['oDATA']==1) {
 			$msg="Status Updated Successfully.";
@@ -115,7 +115,7 @@ class News extends SiteData {
 	}
 	function enableStatus($id) {
 		$id = inText($id);
-		$sql = "UPDATE ".NEWS_EVENTS." set status='1' where id='$id'";
+		$sql = "UPDATE ".KAVITA." set status='1' where id='$id'";
 		$res = $this->update($sql);
 		if($res['oDATA']==1) {
 			$msg="Status Updated Successfully.";
@@ -123,8 +123,8 @@ class News extends SiteData {
 		}
 	}
 	function deleteNews($id) {
-		$sql = "DELETE from ".NEWS_EVENTS." WHERE id = $id ";
-		$s = "SELECT * from ".NEWS_EVENTS." WHERE id = $id";
+		$sql = "DELETE from ".KAVITA." WHERE id = $id ";
+		$s = "SELECT * from ".KAVITA." WHERE id = $id";
 		$res = $this->getData($s);
 		$file_name =$res['oDATA'][0]['file_name'];
 		@unlink("../documents/".$file_name);

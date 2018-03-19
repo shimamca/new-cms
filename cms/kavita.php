@@ -5,20 +5,12 @@ require_once("../includes/database.php");
 require_once("../includes/classes/db.cls.php");
 require_once("../includes/classes/sitedata.cls.php");
 require_once("includes/functions/common.php");
-require_once("../includes/classes/PhotoGalleries.cls.php");
+require_once("../includes/classes/kavita.cls.php");
 loginValidate();
 $db = new SiteData();
-$phoObj = new PhotoGalleries();
+$kavitaObj = new Kavita();
 $_curpage = currentPage();
 $_SESSION[SES]['curpage'] = currentURL();
-$login_uid = $_SESSION[SES]['admin']['admin_id'];
-$logout_date_time= date("d-m-Y h:i");
-//Select login details
-$sql = "SELECT * from admin_logs where login_uid='$login_uid' order by login_id desc limit 1"; 
-$res = $db->getData($sql);
-$login_id = outText($res['oDATA'][0]['login_id']);
-$login_date_time = outText($res['oDATA'][0]['login_date_time']);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +27,7 @@ $login_date_time = outText($res['oDATA'][0]['login_date_time']);
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -47,10 +40,14 @@ $login_date_time = outText($res['oDATA'][0]['login_date_time']);
       
       <div class="row">
         <div class="col-12">
-        <div class="col-12"> <h4>Home</h4> <hr>
-	<p>Welcome to Admin Panel</p>
-	<p>Last Login Time : <?php echo $login_date_time;?></p>
-        </div></div>
+         <?php
+		$q= isset($_GET['q'])?$_GET['q']:"";
+		switch($q) {
+			//case "add" : {include_once("includes/news_events_add.php"); break;}
+			case "edit" : {include_once("includes/kavita_edit.php"); break;}
+			default:  {include_once("includes/kavita_list.php"); break;}
+		}?>
+        </div>
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -61,12 +58,13 @@ $login_date_time = outText($res['oDATA'][0]['login_date_time']);
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
    <script type='text/javascript' src='js/common.js'></script>
-
-<script type="text/javascript">
-function sortdata(orderby) {
-	document.location.href="BanerSort.php?orderby="+orderby;
-} 
-</script>
+	<script type="text/javascript">
+	function sortdata(orderby) {
+	document.location.href="NewsEventsSort.php?orderby="+orderby;
+	} 
+	</script>
+	<script type='text/javascript' src='js/datetimepicker_css.js'></script>
+	<script src="js/bootstrap.min.js"></script>
 
 </body>
 

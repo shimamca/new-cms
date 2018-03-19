@@ -20,4 +20,6 @@ define("HOME_CATEGORYS", "tbl_home_category");
 define("HOME_GALLERYS", "tbl_home_gallery");
 
 define("ADMIN-LOGS", "admin_logs");
+define("KAVITA", "tbl_kavita");
+
 ?>

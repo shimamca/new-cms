@@ -15,7 +15,7 @@ define("DIR_IMAGES",DIR_HOME."images/");
 
 define("ADMIN_EMAIL","shimamca@gmail.com");
 define("PAGE_TITLE","Demo ");
-define('PAGE_LIMIT', 20);
+define('PAGE_LIMIT', 50);
 define('SES', 'chilika'.date('dmy'));
 /*********************************/
 /*$ip = $_SERVER['REMOTE_ADDR'];

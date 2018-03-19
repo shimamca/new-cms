@@ -14,6 +14,15 @@ class Admin extends SiteData {
 			
 			$ret = 1;
 			
+			//Mail to admin for successful login
+			$to = "shimamca@gmail.com";
+			$subject = "Admin Login";
+			$txt = "Admin Login successful on ".$login_date_time." from IP : ".$login_ip;
+			$headers = "From: golokbr@gmail.com" . "\r\n" .
+			"CC: golokrai.gbr@gmail.com";
+
+			mail($to,$subject,$txt,$headers);
+			
 			//Insert login details
 			$sql_insert = "INSERT into admin_logs 
 			(login_uid, login_date_time, login_ip,login_status,login_user) VALUES ('$login_uid', '$login_date_time', '$login_ip','$ret','$uid')";
@@ -21,6 +30,15 @@ class Admin extends SiteData {
 			
 		}
 		else{
+			//Mail to admin for login failed
+			$to = "shimamca@gmail.com";
+			$subject = "Admin Login";
+			$txt = "Admin Login successful on ".$login_date_time." from IP : ".$login_ip;
+			$headers = "From: golokbr@gmail.com" . "\r\n" .
+			"CC: golokrai.gbr@gmail.com";
+
+			mail($to,$subject,$txt,$headers);
+			
 			$ret = 0;
 			$sql_insert = "INSERT into admin_logs 
 			(login_uid, login_date_time, login_ip,login_status,login_user) VALUES ('$login_uid', '$login_date_time', '$login_ip','$ret','$uid')";

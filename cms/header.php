@@ -36,7 +36,12 @@
             <span class="nav-link-text">Article & Events</span>
           </a>
         </li>
-		
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="kavita.php">
+            
+            <span class="nav-link-text">Kavita</span>
+          </a>
+        </li>
       </ul>
       
 	  
